@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ptc-mirna"
+version = "1.1.2"
+description = "Pseudo-temporal Causality approach to identify miRNA-mRNA interactions during biological processes"
+readme = "README.md"
+license = {text = "GPL-3.0-only"}
+authors = [
+    {name = "Andres Mauricio Cifuentes_Bernal"},
+    {name = "Vu VH Pham"},
+    {name = "Taosheng Xu"},
+    {name = "Thuc Duy Le"},
+]
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.26", "pandas>=1.5"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/AndresMCB/ptc-python"
+"R package" = "https://github.com/AndresMCB/PTC"
+Paper = "https://doi.org/10.1093/bioinformatics/btaa899"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ptc = ["data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
