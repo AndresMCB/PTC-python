@@ -4,7 +4,7 @@ Cifuentes-Bernal AM, Pham VVH, Li X, Liu L, Li J, Le TD. A pseudo-temporal
 causality approach to identifying miRNA-mRNA interactions during biological
 processes. Bioinformatics, 2021. https://doi.org/10.1093/bioinformatics/btaa899
 
-Run with:  python examples/paper_experiments.py
+Run with:  python examples/PTC.MainApplication.py
 """
 
 import ptc

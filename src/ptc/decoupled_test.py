@@ -3,8 +3,8 @@
 Python version of R/decoupledTest.R in the R package PTC, which is the part
 of seqICP::seqICP.s() (seqICP 1.1, by Niklas Pfister and Jonas Peters, GPL-3)
 that PTC uses: test = "decoupled", model = "iid", link = sum and a parametric
-bootstrap. The random draws are R's (see rrandom.py), so p-values are the
-same as in R.
+bootstrap. The random draws are R's (see rrandom.py), so p-values match
+those computed in R.
 
 Pfister, N., P. Buhlmann and J. Peters (2019). Invariant Causal Prediction for
 Sequential Data. Journal of the American Statistical Association.

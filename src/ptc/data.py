@@ -1,4 +1,4 @@
-"""Datasets of the R package PTC, exported by scripts/export_from_R.R."""
+"""Datasets of the R package PTC, exported by scripts/PTC.ExportData.R."""
 
 import csv
 import gzip

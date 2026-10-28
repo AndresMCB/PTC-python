@@ -2,8 +2,8 @@
 
 PTC.miRv21() uses miRBaseConverter::miRNAVersionConvert(). The conversion
 table in data/miRBase_v21.csv.gz was exported from miRBaseConverter
-(scripts/export_from_R.R) and this module applies the same rules, so the
-converted names are the same as in R.
+(scripts/PTC.ExportData.R) and this module applies the same rules, so
+conversions match PTC.miRv21() in R.
 """
 
 import csv

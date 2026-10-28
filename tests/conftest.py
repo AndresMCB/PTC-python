@@ -9,7 +9,7 @@ EXPECTED = Path(__file__).parent / "expected"
 
 
 def read_expected(name):
-    """An expected result exported from R by scripts/export_from_R.R."""
+    """An expected result exported from R by scripts/PTC.ExportData.R."""
     return pd.read_csv(EXPECTED / name, dtype=str, keep_default_na=False)
 
 

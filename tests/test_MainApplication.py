@@ -1,5 +1,5 @@
-"""The example script reproduces the experiments of the paper (R results of
-inst/PTC.MainApplication.R)."""
+"""examples/PTC.MainApplication.py compared with inst/PTC.MainApplication.R
+of the R package."""
 
 import runpy
 from pathlib import Path
@@ -10,16 +10,16 @@ import pytest
 import ptc
 from conftest import EXPECTED, parents, read_expected
 
-SCRIPT = Path(__file__).parent.parent / "examples" / "paper_experiments.py"
+SCRIPT = Path(__file__).parent.parent / "examples" / "PTC.MainApplication.py"
 
 
-def test_wanderlust_time_is_read_as_in_r():
+def test_wanderlust_time():
     expected = [float.fromhex(x) for x in (EXPECTED / "wandTime.txt").read_text().split()]
     assert ptc.load_wanderlust_time().tolist() == expected
 
 
 @pytest.mark.filterwarnings("ignore:The invariance test failed")
-def test_example_script_gives_r_results():
+def test_MainApplication():
     script = runpy.run_path(str(SCRIPT))
     results = script["run_experiments"]()
     for key, name in [("test1", "tcga"), ("test2", "sc"), ("test3", "sc_wanderlust")]:

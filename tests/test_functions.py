@@ -1,4 +1,5 @@
-"""The building blocks give the same values as in R."""
+"""Random numbers, miRNA name conversion, p-values of the decoupled test and
+ranking, compared with the outputs of the R package (tests/expected)."""
 
 import numpy as np
 import pandas as pd
@@ -10,19 +11,19 @@ from ptc.rrandom import RRandom
 from conftest import EXPECTED, read_expected
 
 
-def test_random_numbers_are_r_ones():
+def test_random_numbers():
     expected = [float.fromhex(x) for x in (EXPECTED / "rnorm.txt").read_text().split()]
     got = np.concatenate([RRandom(1).rnorm(5000), RRandom(12345).rnorm(1000)])
     assert got.tolist() == expected
 
 
-def test_mirbase_v21_names():
+def test_mirv21():
     for batch in ["tcga", "sc", "odd"]:
         expected = read_expected(f"mirv21_{batch}.csv")
         assert ptc.mirv21(expected["name"]) == expected["v21"].tolist()
 
 
-def test_decoupled_test_p_values(tcga):
+def test_decoupled_test(tcga):
     miRNAs, mRNAs = tcga
     sel = ptc.gene_sel(ptc.ptime([miRNAs, mRNAs], mRNAs["VIM"]), 30, 1500)
     d, col = sel["d"], sel["columns"]
@@ -38,7 +39,7 @@ def test_decoupled_test_p_values(tcga):
     np.testing.assert_allclose(got, expected["p"], rtol=1e-12, atol=0)
 
 
-def test_ranking_by_context_score():
+def test_rank_by_context():
     rel = pd.DataFrame({"miR": ["a", "b", "c", "d"], "mR": ["A", "B", "C", "D"]})
     ctx = pd.DataFrame({"Gene.Symbol": ["A", "B", "C"], "miRNA": ["a", "b", "c"],
                         "context.score": [-0.05, -0.9, 0.2]})
@@ -47,7 +48,7 @@ def test_ranking_by_context_score():
     assert ranked["Score"].tolist() == ["-0.9", "-0.05", "0.2", "NaN"]
 
 
-def test_no_interactions_gives_empty_summary():
+def test_empty_summary():
     empty = ptc.inter_list_to_matrix({})
     ranked = ptc.rank_by_context(ptc.context_scores(), empty)
     assert len(ranked) == 0

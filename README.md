@@ -1,6 +1,6 @@
 # PTC for Python
 
-Python version of the R package [PTC](https://github.com/AndresMCB/PTC), which finds causal miRNA-mRNA relationships during biological processes. It gives the same results as the R package (version 1.1.2): the same interactions, ranks and scores. The tests in `tests/` check this against results exported from R.
+PTC-python is a Python implementation of the R package [PTC](https://github.com/AndresMCB/PTC) (version 1.1.2), which finds causal miRNA-mRNA relationships during biological processes. Both implementations produce identical outputs: interactions, ranks and scores (see [Validation](#validation)).
 
 Detailed information about the method can be found in:
 
@@ -43,15 +43,15 @@ mRNAs = pd.read_csv("mrna.csv", index_col=0)
 result = ptc.ptc(miRNAs, mRNAs, VIM=mRNAs["VIM"])
 ```
 
-The parameters are the same as in R: `nmiR=30`, `nmR=1500`, `ngrid=2`, `alpha=0.02`, `complements=True`, `explore_all=True`, `silent=True` and `TScan=None` (TargetScan 7.0). `TScan` can be a DataFrame with your own miRNA-mRNA predictions (columns miRNA and mRNA, miRBase v21 names).
+Parameters and default values follow the R package: `nmiR=30`, `nmR=1500`, `ngrid=2`, `alpha=0.02`, `complements=True`, `explore_all=True`, `silent=True` and `TScan=None` (TargetScan 7.0). `TScan` can be a DataFrame with your own miRNA-mRNA predictions (columns miRNA and mRNA, miRBase v21 names).
 
 On the TCGA BRCA data, `ptc.ptc()` takes a few seconds.
 
 ## Experiments of the paper
-[examples/paper_experiments.py](examples/paper_experiments.py) runs the experiments of the paper, as [inst/PTC.MainApplication.R](https://github.com/AndresMCB/PTC/blob/master/inst/PTC.MainApplication.R) in the R package:
+[examples/PTC.MainApplication.py](examples/PTC.MainApplication.py) runs the experiments of the paper, as [inst/PTC.MainApplication.R](https://github.com/AndresMCB/PTC/blob/master/inst/PTC.MainApplication.R) in the R package:
 
 ```bash
-python examples/paper_experiments.py
+python examples/PTC.MainApplication.py
 ```
 
 | Experiment | Interactions | Experimentally confirmed | Confirmed in the top 200 |
@@ -60,7 +60,7 @@ python examples/paper_experiments.py
 | test2: single-cell, VIM pseudotime | 567 | 294 | 121 |
 | test3: single-cell, Wanderlust pseudotime | 565 | 293 | 122 |
 
-These are the same numbers as with the R script. In the single-cell data, the invariance test cannot be computed for BZW1, EIF4G2 and SUB1 (singular design matrix), as in R; they are listed in `result.failed`.
+The R script reports the same values. In the single-cell data, the invariance test cannot be computed for BZW1, EIF4G2 and SUB1 (singular design matrix); they are listed in `result.failed`.
 
 ## Functions
 | Python | R |
@@ -79,13 +79,13 @@ These are the same numbers as with the R script. In the single-cell data, the in
 | `load_tcga_brca`, `load_single_cell`, `load_wanderlust_time` | `TCGA_BRCAdata`, `SC_miRNAsdata` and `SC_mRNAsdata`, `wandTime.csv` |
 | `tscan`, `context_scores`, `ground_truth` | `TScan`, `TS7.0_Conserved_Site_Context_Scores`, `GroundT` |
 
-## Same results as R
-To give exactly the same results, the Python version:
+## Validation
+PTC-python was validated against the R package. To obtain identical outputs, it:
 * uses R's random numbers: `set.seed(1)` and `rnorm()` (Mersenne-Twister and inversion) are reproduced in `ptc/rrandom.py`;
 * converts miRNA names to miRBase v21 with the same table and rules as miRBaseConverter;
 * computes medians and means as R does (extended precision).
 
-The data in `src/ptc/data` and the expected results in `tests/expected` were exported from the R package with `scripts/export_from_R.R`. To run the tests:
+The data in `src/ptc/data` and the expected results in `tests/expected` were exported from the R package with `scripts/PTC.ExportData.R`. To run the tests:
 
 ```bash
 pip install "ptc-mirna[test] @ git+https://github.com/AndresMCB/ptc-python"

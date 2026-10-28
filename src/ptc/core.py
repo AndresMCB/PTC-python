@@ -1,7 +1,7 @@
 """PTC: Pseudo-temporal Causality, a Python version of the R package PTC 1.1.2.
 
-Each function follows the R function of the same name, and returns the same
-results (see tests/). Expression data are pandas DataFrames with samples in
+Each function follows the R function of the same name (see the table in
+README.md); tests/ compares their outputs with those of the R package. Expression data are pandas DataFrames with samples in
 rows and genes in columns, as matrices in the R package.
 """
 
