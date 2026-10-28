@@ -8,7 +8,7 @@ from .core import (PTCResult, confirmed_from_list, confirmed_from_matrix,
                    inter_list_to_matrix, inter_matrix_to_list, ptc, ptime,
                    rank_by_context, test_invariance)
 from .data import (context_scores, ground_truth, load_single_cell,
-                   load_tcga_brca, tscan)
+                   load_tcga_brca, load_wanderlust_time, tscan)
 from .mirbase import mirv21
 
 __version__ = "1.1.2"

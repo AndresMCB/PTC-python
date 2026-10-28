@@ -56,6 +56,12 @@ data(TCGA_BRCAdata)
 writeMatrix(TCGA_BRCAdata$miRs, "TCGA_BRCA_miRNAs")
 writeMatrix(TCGA_BRCAdata$mRNAs, "TCGA_BRCA_mRNAs")
 
+# Wanderlust pseudotime of the single-cell data, copied from data/wandTime.csv
+# of the R package repository (set PTC_R_REPO to its folder)
+ptc_repo <- Sys.getenv("PTC_R_REPO", "../PTC")
+file.copy(file.path(ptc_repo, "data", "wandTime.csv"), file.path(out, "wandTime.csv"), overwrite = TRUE)
+wandTime <- read.csv(file.path(out, "wandTime.csv"), header = FALSE)
+
 # check that the context scores read back identically from the CSV
 back <- read.csv(file.path(out, "TS7.0_context_scores.csv.gz"))
 stopifnot(identical(back$context.score, ctx[["context...score"]]))
@@ -72,6 +78,9 @@ writeResult <- function(res, name) {
 }
 res <- suppressWarnings(suppressMessages(PTC(SC$miRs, SC$mRNAs, VIM = SC$mRNAs[, "VIM"])))
 writeResult(res, "sc")
+res <- suppressWarnings(suppressMessages(PTC(SC$miRs, SC$mRNAs, VIM = unlist(wandTime))))
+writeResult(res, "sc_wanderlust")
+writeLines(sprintf("%a", unlist(wandTime)), file.path(expected, "wandTime.txt"))
 res <- suppressWarnings(suppressMessages(PTC(TCGA_BRCAdata$miRs, TCGA_BRCAdata$mRNAs,
                                               VIM = TCGA_BRCAdata$mRNAs[, "VIM"])))
 writeResult(res, "tcga")

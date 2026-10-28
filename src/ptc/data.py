@@ -65,3 +65,11 @@ def load_single_cell():
     prepared as in inst/PTC.MainApplication.R of the R package (19 half-cells).
     Returns (miRNAs, mRNAs); samples are matched by row order."""
     return _matrix("SC_miRNAs"), _matrix("SC_mRNAs")
+
+
+def load_wanderlust_time():
+    """Pseudotime of the single-cell data obtained with Wanderlust (Bendall et
+    al., 2014; k=4, l=2, ng=2, snn=0), one value per cell in the order of
+    load_single_cell() (wandTime.csv in the R package)."""
+    with open(_path("wandTime.csv")) as f:
+        return np.array([float(x) for x in f.read().strip().split(",")])

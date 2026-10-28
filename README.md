@@ -47,6 +47,21 @@ The parameters are the same as in R: `nmiR=30`, `nmR=1500`, `ngrid=2`, `alpha=0.
 
 On the TCGA BRCA data, `ptc.ptc()` takes a few seconds.
 
+## Experiments of the paper
+[examples/paper_experiments.py](examples/paper_experiments.py) runs the experiments of the paper, as [inst/PTC.MainApplication.R](https://github.com/AndresMCB/PTC/blob/master/inst/PTC.MainApplication.R) in the R package:
+
+```bash
+python examples/paper_experiments.py
+```
+
+| Experiment | Interactions | Experimentally confirmed | Confirmed in the top 200 |
+|---|---|---|---|
+| test1: TCGA BRCA, VIM pseudotime | 292 | 30 | 25 |
+| test2: single-cell, VIM pseudotime | 567 | 294 | 121 |
+| test3: single-cell, Wanderlust pseudotime | 565 | 293 | 122 |
+
+These are the same numbers as with the R script. In the single-cell data, the invariance test cannot be computed for BZW1, EIF4G2 and SUB1 (singular design matrix), as in R; they are listed in `result.failed`.
+
 ## Functions
 | Python | R |
 |---|---|
@@ -61,7 +76,7 @@ On the TCGA BRCA data, `ptc.ptc()` takes a few seconds.
 | `rank_by_context` | `PTC.RankByContext` |
 | `mirv21` | `PTC.miRv21` |
 | `confirmed_from_list`, `confirmed_from_matrix` | `Confirmed.fromList`, `Confirmed.fromMatrix` |
-| `load_tcga_brca`, `load_single_cell` | `TCGA_BRCAdata`, `SC_miRNAsdata` and `SC_mRNAsdata` |
+| `load_tcga_brca`, `load_single_cell`, `load_wanderlust_time` | `TCGA_BRCAdata`, `SC_miRNAsdata` and `SC_mRNAsdata`, `wandTime.csv` |
 | `tscan`, `context_scores`, `ground_truth` | `TScan`, `TS7.0_Conserved_Site_Context_Scores`, `GroundT` |
 
 ## Same results as R
